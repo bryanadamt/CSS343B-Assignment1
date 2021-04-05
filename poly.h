@@ -25,7 +25,7 @@ public:
     Poly operator+(const Poly &toadd);
 
     int getCoeff(int coefficient) const;
-    int getMaxExp() const; //how to use
+    int getMaxExp() const;
     
     void setCoeff(int coefficient, int exponent);
 };
