@@ -56,46 +56,53 @@ Poly::~Poly()
 Poly Poly::operator+(const Poly &toAdd)
 {
     int toAddMaxExp = toAdd.getMaxExp();
-    if (maxExponent < toAddMaxExp) 
+    int maxExp = getMaxExp();
+    if (maxExponent < toAddMaxExp)
     {
-        Poly newPoly(toAdd);
-        for(int i = 0; i <= maxExponent; i++) 
-        {
-            int newCoeff = newPoly.getCoeff(i) + getCoeff(i);
-            newPoly.setCoeff(newCoeff, i);
-        }
-        return newPoly;
-    } 
-
-    Poly newPoly(getCoeff(maxExponent), maxExponent);
-    // Range is based on the number of exponent of toAdd because
-    // at this point, it's either the polynomial being added is of 
-    // equal exponents or toAdd has lesser.
-    for(int i = 0; i <= toAddMaxExp; i++)
-    {
-        int newCoeff = toAdd.getCoeff(i) + getCoeff(i);
-        newPoly.setCoeff(newCoeff, i);
+        maxExp = toAddMaxExp;
     }
-    // If the polynomial is not equal (which means toAdd has less exponent),
-    // add the rest of the first polynomial
-    if(toAddMaxExp < maxExponent) {
-        for(int i = toAddMaxExp + 1; i <= maxExponent; i++)
-        {
-            newPoly.setCoeff(getCoeff(i), i);
-        }
+    // Initialize a newPoly object, "0" is just a neutral number/placeholder
+    Poly newPoly(0, maxExp);
+
+    for (int i = 0; i <= maxExponent; i++) 
+    {
+        newPoly.setCoeff(getCoeff(i), i);
+    }
+    for (int i = 0; i <= toAddMaxExp; i++) 
+    {
+        int newCoeff = newPoly.getCoeff(i) + toAdd.getCoeff(i);
+        newPoly.setCoeff(newCoeff, i);
     }
     return newPoly;
 }
 
 Poly Poly::operator-(const Poly &toSubtract) 
 {
+    int toSubMaxExp = toSubtract.getMaxExp();
+    int maxExp = getMaxExp();
+    if (maxExponent < toSubMaxExp)
+    {
+        maxExp = toSubMaxExp;
+    }
+    // Initialize a newPoly object, "0" is just a neutral number/placeholder
+    Poly newPoly(0, maxExp);
 
+    for (int i = 0; i <= maxExponent; i++) 
+    {
+        newPoly.setCoeff(getCoeff(i), i);
+    }
+    for (int i = 0; i <= toSubMaxExp; i++) 
+    {
+        int newCoeff = newPoly.getCoeff(i) - toSubtract.getCoeff(i);
+        newPoly.setCoeff(newCoeff, i);
+    }
+    return newPoly;
 }
 
-Poly Poly::operator*(const Poly &toMultiply) 
-{
+// Poly Poly::operator*(const Poly &toMultiply) 
+// {
     
-}
+// }
 
 // Get one term's coefficient
 int Poly::getCoeff(int exponent) const 
@@ -118,15 +125,14 @@ int main()
 {
     //test
     Poly blank;
-    Poly a(3,2);
+    Poly a(-3,2);
     Poly b(5);
     Poly c(a);
     // cout << blank.getCoeff(0) << endl;
     // cout << a.getMaxExp() << endl;
     // cout << b.getMaxExp() << endl;
     // cout << c.getCoeff(2) << endl;
-    Poly temp(b + a);
-    cout << temp.getMaxExp() << endl;
+    Poly temp(a + b);
     cout << temp.getCoeff(0) << endl;
     cout << temp.getCoeff(1) << endl;
     cout << temp.getCoeff(2) << endl;
