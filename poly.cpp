@@ -87,6 +87,16 @@ Poly Poly::operator+(const Poly &toAdd)
     return newPoly;
 }
 
+Poly Poly::operator-(const Poly &toSubtract) 
+{
+
+}
+
+Poly Poly::operator*(const Poly &toMultiply) 
+{
+    
+}
+
 // Get one term's coefficient
 int Poly::getCoeff(int exponent) const 
 {

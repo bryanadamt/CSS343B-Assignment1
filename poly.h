@@ -22,9 +22,11 @@ public:
 
     ~Poly();
 
-    Poly operator+(const Poly &toadd);
+    Poly operator+(const Poly &toAdd);
+    Poly operator-(const Poly &toSubtract);
+    Poly operator*(const Poly &toMultiply);
 
-    int getCoeff(int coefficient) const;
+    int getCoeff(int exponent) const;
     int getMaxExp() const;
     
     void setCoeff(int coefficient, int exponent);
