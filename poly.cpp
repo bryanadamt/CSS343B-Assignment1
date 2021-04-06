@@ -52,7 +52,8 @@ Poly::~Poly()
     delete[] polynomial;
 }
 
-// Overload addition operator, adds 2 polynomials together
+// Overload addition operator, create a new Poly object
+// that stores the sum of the 2 given polynomials
 Poly Poly::operator+(const Poly &toAdd)
 {
     int toAddMaxExp = toAdd.getMaxExp();
@@ -76,6 +77,8 @@ Poly Poly::operator+(const Poly &toAdd)
     return newPoly;
 }
 
+// Overload addition operator, create a new Poly object
+// that stores the difference of the 2 given polynomials
 Poly Poly::operator-(const Poly &toSubtract) 
 {
     int toSubMaxExp = toSubtract.getMaxExp();
@@ -99,10 +102,27 @@ Poly Poly::operator-(const Poly &toSubtract)
     return newPoly;
 }
 
-// Poly Poly::operator*(const Poly &toMultiply) 
-// {
-    
-// }
+Poly Poly::operator*(const Poly &toMultiply) 
+{
+    int maxExp = getMaxExp() + toMultiply.getMaxExp();
+    Poly newPoly(0, maxExp);
+
+    for (int i = getMaxExp(); i >= 0; i--) 
+    {
+        for (int j = toMultiply.getMaxExp(); j >= 0; j--) 
+        {
+            int newExp = i + j;
+            int newCoeff = newPoly.getCoeff(newExp) + (getCoeff(i) * toMultiply.getCoeff(j));
+            cout << newPoly.getCoeff(newExp) << " coeff at newPoly" <<endl;
+            cout << i << " i " << j << " j" <<endl;
+            cout << "     " << newExp << " exp " << newCoeff << " coeff" <<endl;
+            cout << endl;
+            newPoly.setCoeff(newCoeff, newExp);
+        }
+    }
+
+    return newPoly;
+}
 
 // Get one term's coefficient
 int Poly::getCoeff(int exponent) const 
@@ -125,16 +145,30 @@ int main()
 {
     //test
     Poly blank;
-    Poly a(-3,2);
-    Poly b(5);
-    Poly c(a);
-    // cout << blank.getCoeff(0) << endl;
-    // cout << a.getMaxExp() << endl;
-    // cout << b.getMaxExp() << endl;
-    // cout << c.getCoeff(2) << endl;
-    Poly temp(a + b);
-    cout << temp.getCoeff(0) << endl;
-    cout << temp.getCoeff(1) << endl;
-    cout << temp.getCoeff(2) << endl;
+    Poly a(-8,3);
+    Poly b(2,1);
+    Poly c(-5,1);
+    Poly d(2); //-8^3 +2^1 -5^1 +2
+
+    Poly e(-3,2);
+    Poly f(7); 
+    Poly g(7);
+    Poly ha(-9,3);//-9^3-3x^2 +7 +7
+    
+    Poly q(a + b);
+    Poly o(q + c);
+    Poly x(o + d);
+
+    Poly w(e + f);
+    Poly hi(w + ha);
+    Poly y(hi + g);
+
+    Poly temp(x * y);
+    for (int i = temp.getMaxExp(); i >= 0; i--) 
+    {
+        cout << temp.getCoeff(i) << ", ";  
+    }
+    cout << endl;
+    cout << temp.getMaxExp() << endl;;
     return 0;
 }
