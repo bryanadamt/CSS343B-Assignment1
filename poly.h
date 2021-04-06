@@ -27,9 +27,9 @@ public:
     Poly operator*(const Poly &toMultiply);
 
     void operator=(const Poly &toAssign);
-    void operator+=(const Poly &addAssign);
-    void operator-=(const Poly &subAssign);
-    void operator*=(const Poly &multAssign);
+    void operator+=(const Poly &toAssign);
+    void operator-=(const Poly &toAssign);
+    void operator*=(const Poly &toAssign);
 
     bool operator==(const Poly &toCompare);
     bool operator!=(const Poly &toCompare);
