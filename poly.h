@@ -11,7 +11,7 @@
 class Poly
 {
 private:
-    int maxExponent;
+    int maxCapacity;
     int* polynomial;
 
 public:
@@ -26,7 +26,7 @@ public:
     Poly operator-(const Poly &toSubtract);
     Poly operator*(const Poly &toMultiply);
 
-    Poly operator=(const Poly &toAssign);
+    void operator=(const Poly &toAssign);
     Poly operator+=(const Poly &addAssign);
     Poly operator-=(const Poly &subAssign);
     Poly operator*=(const Poly &multAssign);
@@ -35,7 +35,7 @@ public:
     Poly operator!=(const Poly &toCompare);
 
     int getCoeff(int exponent) const;
-    int getMaxExp() const;
+    int getMaxCap() const;
     
     void setCoeff(int coefficient, int exponent);
 };
