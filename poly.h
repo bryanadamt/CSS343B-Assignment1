@@ -27,12 +27,12 @@ public:
     Poly operator*(const Poly &toMultiply);
 
     void operator=(const Poly &toAssign);
-    Poly operator+=(const Poly &addAssign);
-    Poly operator-=(const Poly &subAssign);
-    Poly operator*=(const Poly &multAssign);
+    void operator+=(const Poly &addAssign);
+    void operator-=(const Poly &subAssign);
+    void operator*=(const Poly &multAssign);
 
-    Poly operator==(const Poly &toCompare);
-    Poly operator!=(const Poly &toCompare);
+    bool operator==(const Poly &toCompare);
+    bool operator!=(const Poly &toCompare);
 
     int getCoeff(int exponent) const;
     int getMaxCap() const;

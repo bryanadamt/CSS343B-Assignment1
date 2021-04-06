@@ -57,13 +57,13 @@ Poly::~Poly()
 Poly Poly::operator+(const Poly &toAdd)
 {
     int toAddMaxCap = toAdd.getMaxCap();
-    int maxCap = getMaxCap();
+    int newMaxCap = getMaxCap();
     if (maxCapacity < toAddMaxCap)
     {
-        maxCap = toAddMaxCap;
+        newMaxCap = toAddMaxCap;
     }
     // Initialize a newPoly object, "0" is just a neutral number/placeholder
-    Poly newPoly(0, maxCap);
+    Poly newPoly(0, newMaxCap);
 
     for (int i = 0; i <= maxCapacity; i++) 
     {
@@ -82,13 +82,13 @@ Poly Poly::operator+(const Poly &toAdd)
 Poly Poly::operator-(const Poly &toSubtract) 
 {
     int toSubMaxCap = toSubtract.getMaxCap();
-    int maxCap = getMaxCap();
+    int newMaxCap = getMaxCap();
     if (maxCapacity < toSubMaxCap)
     {
-        maxCap = toSubMaxCap;
+        newMaxCap = toSubMaxCap;
     }
     // Initialize a newPoly object, "0" is just a neutral number/placeholder
-    Poly newPoly(0, maxCap);
+    Poly newPoly(0, newMaxCap);
 
     for (int i = 0; i <= maxCapacity; i++) 
     {
@@ -106,8 +106,8 @@ Poly Poly::operator-(const Poly &toSubtract)
 // that stores the product of the 2 given polynomials
 Poly Poly::operator*(const Poly &toMultiply) 
 {
-    int maxCap = getMaxCap() + toMultiply.getMaxCap();
-    Poly newPoly(0, maxCap);
+    int newMaxCap = getMaxCap() + toMultiply.getMaxCap();
+    Poly newPoly(0, newMaxCap);
 
     for (int i = getMaxCap(); i >= 0; i--) 
     {
@@ -127,6 +127,8 @@ void Poly::operator=(const Poly &toAssign)
     int toAssignExp = toAssign.getMaxCap();
     if (maxCapacity < toAssignExp) 
     {
+        // If current capacity is not enough, delete the polynomial array
+        // and create a new one then point the pointer to a new one
         maxCapacity = toAssignExp;
         delete polynomial;
         polynomial = new int[maxCapacity + 1];
@@ -147,13 +149,18 @@ void Poly::operator=(const Poly &toAssign)
     }
 }
 
+void Poly::operator+=(const Poly &toAssign)
+{
+    
+}
+
 // Get one term's coefficient
 int Poly::getCoeff(int exponent) const 
 {
     return polynomial[exponent];
 }
 
-// Get the polynomial's max exponent
+// Get the object's max exponent capacity
 int Poly::getMaxCap() const
 {
     return maxCapacity;
