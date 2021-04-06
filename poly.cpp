@@ -151,7 +151,38 @@ void Poly::operator=(const Poly &toAssign)
 
 void Poly::operator+=(const Poly &toAssign)
 {
-    
+    int toAssignExp = toAssign.getMaxCap();
+    if (maxCapacity < toAssignExp) 
+    {
+        maxCapacity = toAssignExp;
+        delete polynomial;
+        polynomial = new int[maxCapacity + 1];
+    }
+
+    for(int i = 0; i <= toAssignExp; i++) 
+    {
+        int newCoeff = getCoeff(i) + toAssign.getCoeff(i);
+        setCoeff(newCoeff, i);
+    }
+}
+
+void Poly::operator-=(const Poly &toAssign)
+{
+    int toAssignExp = toAssign.getMaxCap();
+    if (maxCapacity < toAssignExp) 
+    {
+        maxCapacity = toAssignExp;
+        delete polynomial;
+        polynomial = new int[maxCapacity + 1];
+    }
+
+    //something missingz?
+
+    for(int i = 0; i <= toAssignExp; i++) 
+    {
+        int newCoeff = getCoeff(i) - toAssign.getCoeff(i);
+        setCoeff(newCoeff, i);
+    }
 }
 
 // Get one term's coefficient
