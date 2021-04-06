@@ -26,6 +26,14 @@ public:
     Poly operator-(const Poly &toSubtract);
     Poly operator*(const Poly &toMultiply);
 
+    Poly operator=(const Poly &toAssign);
+    Poly operator+=(const Poly &addAssign);
+    Poly operator-=(const Poly &subAssign);
+    Poly operator*=(const Poly &multAssign);
+
+    Poly operator==(const Poly &toCompare);
+    Poly operator!=(const Poly &toCompare);
+
     int getCoeff(int exponent) const;
     int getMaxExp() const;
     

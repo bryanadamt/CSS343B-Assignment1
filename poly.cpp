@@ -77,7 +77,7 @@ Poly Poly::operator+(const Poly &toAdd)
     return newPoly;
 }
 
-// Overload addition operator, create a new Poly object
+// Overload subtraction operator, create a new Poly object
 // that stores the difference of the 2 given polynomials
 Poly Poly::operator-(const Poly &toSubtract) 
 {
@@ -102,6 +102,8 @@ Poly Poly::operator-(const Poly &toSubtract)
     return newPoly;
 }
 
+// Overload multiplication operator, create a new Poly object
+// that stores the product of the 2 given polynomials
 Poly Poly::operator*(const Poly &toMultiply) 
 {
     int maxExp = getMaxExp() + toMultiply.getMaxExp();
@@ -122,6 +124,12 @@ Poly Poly::operator*(const Poly &toMultiply)
     }
 
     return newPoly;
+}
+
+// Overload assignment operator, assign one polynomial to another
+Poly Poly::operator=(const Poly &toAssign)
+{
+
 }
 
 // Get one term's coefficient
