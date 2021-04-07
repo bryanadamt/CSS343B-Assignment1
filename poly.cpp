@@ -14,33 +14,34 @@
 using namespace std;
 
 // default constructor
-Poly::Poly() : maxCapacity(0)
+Poly::Poly() : maxExponent(0), arrSize(1)
 {
     polynomial = new int[1];
     setCoeff(0, 0);
 }
 
 // Create a polynomial with the given coefficient and exponent
-Poly::Poly(int coefficient, int exponent) : maxCapacity(exponent)
+Poly::Poly(int coefficient, int exponent) : maxExponent(exponent), arrSize(exponent + 1)
 {
-    polynomial = new int[exponent + 1];
+    polynomial = new int[arrSize];
     setCoeff(coefficient, exponent);
 }
 
 // Create a polynomial with the given coefficient and an exponent of 0
-Poly::Poly(int coefficient) : maxCapacity(0)
+Poly::Poly(int coefficient) : maxExponent(0), arrSize(1)
 { 
     polynomial = new int[1];
     setCoeff(coefficient, 0);
 }
 
 // Copy Constructor, Create a deep copy of the polynomial toCopy
-Poly::Poly(const Poly &toCopy)
+Poly::Poly(const Poly &toCopy) : arrSize(toCopy.getArrSize())
 {
-    maxCapacity = toCopy.getMaxCap();
-    polynomial = new int[maxCapacity + 1];
-
-    for(int i = 0; i <= maxCapacity; i++) 
+    maxExponent = toCopy.getMaxExp();
+    polynomial = new int[arrSize];
+    // a = [0,1]
+    // b should also be [0,1] not just [1]
+    for(int i = 0; i <= maxExponent; i++) 
     {
         setCoeff(toCopy.getCoeff(i), i);
     }
@@ -56,20 +57,23 @@ Poly::~Poly()
 // that stores the sum of the 2 given polynomials
 Poly Poly::operator+(const Poly &toAdd)
 {
-    int toAddMaxCap = toAdd.getMaxCap();
-    int newMaxCap = getMaxCap();
-    if (maxCapacity < toAddMaxCap)
+    int toAddMaxExp = toAdd.getMaxExp();
+    int newMaxExp = getMaxExp();
+    if (newMaxExp < toAddMaxExp)
     {
-        newMaxCap = toAddMaxCap;
+        newMaxExp = toAddMaxExp;
     }
     // Initialize a newPoly object, "0" is just a neutral number/placeholder
-    Poly newPoly(0, newMaxCap);
+    Poly newPoly(0, newMaxExp);
 
-    for (int i = 0; i <= maxCapacity; i++) 
+    // Loop through the polynomial array in each object and adds
+    // them to the newPoly object
+    // Requires 2 arrays because the arrays might be different
+    for (int i = 0; i <= getMaxExp(); i++) 
     {
         newPoly.setCoeff(getCoeff(i), i);
     }
-    for (int i = 0; i <= toAddMaxCap; i++) 
+    for (int i = 0; i <= toAddMaxExp; i++) 
     {
         int newCoeff = newPoly.getCoeff(i) + toAdd.getCoeff(i);
         newPoly.setCoeff(newCoeff, i);
@@ -79,22 +83,22 @@ Poly Poly::operator+(const Poly &toAdd)
 
 // Overload subtraction operator, create a new Poly object
 // that stores the difference of the 2 given polynomials
+// Almost identical to the "+" overloaded operator
 Poly Poly::operator-(const Poly &toSubtract) 
 {
-    int toSubMaxCap = toSubtract.getMaxCap();
-    int newMaxCap = getMaxCap();
-    if (maxCapacity < toSubMaxCap)
+    int toSubMaxExp = toSubtract.getMaxExp();
+    int newMaxExp = getMaxExp();
+    if (newMaxExp < toSubMaxExp)
     {
-        newMaxCap = toSubMaxCap;
+        newMaxExp = toSubMaxExp;
     }
-    // Initialize a newPoly object, "0" is just a neutral number/placeholder
-    Poly newPoly(0, newMaxCap);
+    Poly newPoly(0, newMaxExp);
 
-    for (int i = 0; i <= maxCapacity; i++) 
+    for (int i = 0; i <= getMaxExp(); i++) 
     {
         newPoly.setCoeff(getCoeff(i), i);
     }
-    for (int i = 0; i <= toSubMaxCap; i++) 
+    for (int i = 0; i <= toSubMaxExp; i++) 
     {
         int newCoeff = newPoly.getCoeff(i) - toSubtract.getCoeff(i);
         newPoly.setCoeff(newCoeff, i);
@@ -106,12 +110,12 @@ Poly Poly::operator-(const Poly &toSubtract)
 // that stores the product of the 2 given polynomials
 Poly Poly::operator*(const Poly &toMultiply) 
 {
-    int newMaxCap = getMaxCap() + toMultiply.getMaxCap();
-    Poly newPoly(0, newMaxCap);
+    int newMaxExp = getMaxExp() + toMultiply.getMaxExp();
+    Poly newPoly(0, newMaxExp);
 
-    for (int i = getMaxCap(); i >= 0; i--) 
+    for (int i = getMaxExp(); i >= 0; i--) 
     {
-        for (int j = toMultiply.getMaxCap(); j >= 0; j--) 
+        for (int j = toMultiply.getMaxExp(); j >= 0; j--) 
         {
             int newExp = i + j;
             int newCoeff = newPoly.getCoeff(newExp) + (getCoeff(i) * toMultiply.getCoeff(j));
@@ -124,20 +128,20 @@ Poly Poly::operator*(const Poly &toMultiply)
 // Overload assignment operator, assign one polynomial to another
 void Poly::operator=(const Poly &toAssign)
 {
-    int toAssignExp = toAssign.getMaxCap();
-    if (maxCapacity < toAssignExp) 
+    int toAssignExp = toAssign.getMaxExp();
+    if (getArrSize() < toAssignExp) 
     {
         // If current capacity is not enough, delete the polynomial array
         // and create a new one then point the pointer to a new one
-        maxCapacity = toAssignExp;
+        maxExponent = toAssignExp;
         delete polynomial;
-        polynomial = new int[maxCapacity + 1];
+        polynomial = new int[toAssign.getArrSize()];
     } 
-    else if (maxCapacity > toAssignExp)
+    else if (getMaxExp() > toAssignExp)
     {
         // If the original polynomial has more exponent,
         // turn them all to 0
-        for(int i = toAssignExp + 1; i <= maxCapacity; i++)
+        for(int i = toAssignExp + 1; i <= getArrSize(); i++)
         {
             setCoeff(0, i);
         }
@@ -147,6 +151,8 @@ void Poly::operator=(const Poly &toAssign)
     {
         setCoeff(toAssign.getCoeff(i), i);
     }
+
+    setMaxExp(toAssignExp);
 }
 
 // Overload addition assignment operator, adds the second polynomial to the first
@@ -216,14 +222,18 @@ void Poly::operator-=(const Poly &toAssign)
 // }
 
 // Overload equality operator
-bool Poly::operator==(const Poly &toAssign)
+const bool Poly::operator==(const Poly &toAssign)
 {
-    
+    // For example [0, 0, 1] is equal to [1] or vice versa
+    if (maxCapacity != toAssign.getMaxCap())
+    {
+        
+    }
     return true;
 }
 
 // Overload inequality operator
-bool Poly::operator!=(const Poly &toAssign)
+const bool Poly::operator!=(const Poly &toAssign)
 {
     return !(*this == toAssign);
 }
@@ -234,10 +244,23 @@ int Poly::getCoeff(int exponent) const
     return polynomial[exponent];
 }
 
-// Get the object's max exponent capacity
-int Poly::getMaxCap() const
+// Get the object's max exponent
+int Poly::getMaxExp() const
 {////////////start with 0 change, make for loop better, make more sense
-    return maxCapacity;
+    for (int i = getMaxCap(); i >= 0; i--)
+    {
+        if (getCoeff(i) > 0)
+        {
+            return getCoeff(i);
+        }
+    }
+    return 0;
+}
+
+// Get the object's max exponent capacity
+int Poly::getArrSize() const
+{////////////start with 0 change, make for loop better, make more sense
+    return arrSize;
 }
 
 void Poly::setCoeff(int coefficient, int exponent) 
@@ -245,45 +268,12 @@ void Poly::setCoeff(int coefficient, int exponent)
     polynomial[exponent] = coefficient;
 }
 
-int main() 
+void Poly::setMaxExp(int newMaxExp)
 {
-    //test
-    Poly blank;
-    Poly a(-8,3);
-    Poly b(2,1);
-    Poly c(-5,1);
-    Poly d(2); //-8^3 -3^1 +2
+    maxExponent = newMaxExp;
+}
 
-    Poly e(-3,2);
-    Poly f(7); 
-    Poly g(7);
-    Poly ha(-9,3);//-9^3-3x^2 +7 +7
-    
-    Poly q(a + b);
-    Poly o(q + c);
-    Poly x(o + d);
-
-    Poly w(e + f);
-    Poly hi(w + ha);
-    Poly y(hi + g);
-
-    Poly temp(a);
-    
-    for (int i = temp.getMaxCap(); i >= 0; i--) 
-    {
-        cout << temp.getCoeff(i) << ", ";  
-    }
-    cout <<endl;
-    temp -= b;
-    for (int i = temp.getMaxCap(); i >= 0; i--) 
-    {
-        cout << temp.getCoeff(i) << ", ";  
-    }
-    cout << endl;
-    if (temp != a)
-    {
-        cout << "temp == a" << endl;
-    }
-    cout << temp.getMaxCap() << endl;;
-    return 0;
+void Poly::setArrSize(int newArrSize)
+{
+    arrSize = newArrSize;
 }

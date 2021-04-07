@@ -11,8 +11,9 @@
 class Poly
 {
 private:
-    int maxCapacity;
+    int maxExponent;
     int* polynomial;
+    int arrSize;
 
 public:
     // Constructors
@@ -35,13 +36,16 @@ public:
     void operator-=(const Poly &toAssign);
     void operator*=(const Poly &toAssign);
 
-    bool operator==(const Poly &toCompare);
-    bool operator!=(const Poly &toCompare);
+    const bool operator==(const Poly &toCompare);
+    const bool operator!=(const Poly &toCompare);
 
     // Accessors
     int getCoeff(int exponent) const;
-    int getMaxCap() const;
+    int getMaxExp() const;
+    int getArrSize() const;
     
     // Mutators
     void setCoeff(int coefficient, int exponent);
+    void setMaxExp(int newMaxExp);
+    void setArrSize(int newArrSize);
 };
