@@ -149,6 +149,8 @@ void Poly::operator=(const Poly &toAssign)
     }
 }
 
+// Overload addition assignment operator, adds the second polynomial to the first
+// and stores the result to the first
 void Poly::operator+=(const Poly &toAssign)
 {
     int toAssignExp = toAssign.getMaxCap();
@@ -166,6 +168,8 @@ void Poly::operator+=(const Poly &toAssign)
     }
 }
 
+// Overload subtraction assignment operator, adds the second polynomial to the first
+// and stores the result to the first
 void Poly::operator-=(const Poly &toAssign)
 {
     int toAssignExp = toAssign.getMaxCap();
@@ -183,6 +187,44 @@ void Poly::operator-=(const Poly &toAssign)
         int newCoeff = getCoeff(i) - toAssign.getCoeff(i);
         setCoeff(newCoeff, i);
     }
+}
+
+// Overload multiplication assignment operator, multiply the second polynomial to the first
+// and stores the result to the first
+// void Poly::operator*=(const Poly &toAssign)
+// {
+//     int newMaxCap = getMaxCap() + toAssign.getMaxCap();
+//     //search for largest exponent? as its not guaranteed no more
+//     int* newPolyArray = maxCapacity;
+//     if (newMaxCap > maxCapacity)
+//     {
+//         newPolyArray = new int[newMaxCap + 1];
+//     }
+
+//     for (int i = getMaxCap(); i >= 0; i--) 
+//     {
+//         for (int j = toAssign.getMaxCap(); j >= 0; j--) 
+//         {
+//             int newExp = i + j;
+//             int newCoeff = newPolyArray[newExp] + (getCoeff(i) * toAssign.getCoeff(j));
+//             newPolyArray[newExp] = newCoeff;
+//         }
+//     }
+
+//     delete[] polynomial;
+//     polynomial = newPolyArray;
+// }
+
+// Overload equality operator
+bool Poly::operator==(const Poly &toAssign)
+{
+    return false;
+}
+
+// Overload inequality operator
+bool Poly::operator!=(const Poly &toAssign)
+{
+    return !(*this == toAssign);
 }
 
 // Get one term's coefficient
@@ -224,7 +266,7 @@ int main()
     Poly hi(w + ha);
     Poly y(hi + g);
 
-    Poly temp;
+    Poly temp(x * y);
     
     for (int i = temp.getMaxCap(); i >= 0; i--) 
     {
