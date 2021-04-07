@@ -281,6 +281,8 @@ int Poly::getMaxExp() const
 {
     for (int i = getArrSize(); i >= 0; i--)
     {
+        cout << getArrSize() << " arr" <<endl;
+        cout << getCoeff(i) << " coe" <<endl;
         if (getCoeff(i) != 0)
         {
             return i;

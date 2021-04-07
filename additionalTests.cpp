@@ -24,11 +24,16 @@ int main()
     Poly hi(w + ha);
     Poly y(hi + g);
 
-    Poly temp(x * y);
+    Poly nu(3,4);
+    Poly r(2,2);
+    Poly def(3,4);
+    x = nu + r - def;// [3,0,2,0,0] - [3,0,0,0,0]
+    //x = a;
+    Poly temp(x);
     
     for (int i = temp.getArrSize() - 1; i > -1; i--) 
     {
-        cout << temp.getCoeff(i) << ", ";  
+        cout << temp.getCoeff(i) << " (" << i << ") ,";  
     }
     // cout <<endl;
     // temp -= b;
