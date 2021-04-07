@@ -41,7 +41,7 @@ Poly::Poly(const Poly &toCopy) : arrSize(toCopy.getArrSize())
     polynomial = new int[arrSize];
     // a = [0,1]
     // b should also be [0,1] not just [1]
-    for(int i = 0; i <= maxExponent; i++) 
+    for (int i = 0; i <= maxExponent; i++) 
     {
         setCoeff(toCopy.getCoeff(i), i);
     }
@@ -134,64 +134,88 @@ void Poly::operator=(const Poly &toAssign)
         // If current capacity is not enough, delete the polynomial array
         // and create a new one then point the pointer to a new one
         maxExponent = toAssignExp;
-        delete polynomial;
+        delete[] polynomial;
         polynomial = new int[toAssign.getArrSize()];
     } 
     else if (getMaxExp() > toAssignExp)
     {
         // If the original polynomial has more exponent,
         // turn them all to 0
-        for(int i = toAssignExp + 1; i <= getArrSize(); i++)
+        for (int i = toAssignExp + 1; i <= getArrSize(); i++)
         {
             setCoeff(0, i);
         }
     }
 
-    for(int i = 0; i <= toAssignExp; i++) 
+    for (int i = 0; i <= toAssignExp; i++) 
     {
         setCoeff(toAssign.getCoeff(i), i);
     }
-
-    setMaxExp(toAssignExp);
 }
 
 // Overload addition assignment operator, adds the second polynomial to the first
 // and stores the result to the first
 void Poly::operator+=(const Poly &toAssign)
 {
-    int toAssignExp = toAssign.getMaxCap();
-    if (maxCapacity < toAssignExp) 
+    int toAssignExp = toAssign.getMaxExp();
+    
+    // The following if statement is to see if the current
+    // object has enough space in the array
+    if (getArrSize() < toAssignExp) 
     {
-        maxCapacity = toAssignExp;
-        delete polynomial;
-        polynomial = new int[maxCapacity + 1];
-    }
+        int* newArray;
+        newArray = new int[toAssignExp];
 
-    for(int i = 0; i <= toAssignExp; i++) 
+        for (int i = 0; i <= toAssignExp; i++) 
+        {
+            int newCoeff = getCoeff(i) + toAssign.getCoeff(i);
+            newArray[i] = newCoeff;
+        }
+
+        setArrSize(toAssignExp);
+        delete[] polynomial;
+        polynomial = newArray;
+    } 
+    else 
     {
-        int newCoeff = getCoeff(i) + toAssign.getCoeff(i);
-        setCoeff(newCoeff, i);
+        for (int i = 0; i <= toAssignExp; i++) 
+        {
+            int newCoeff = getCoeff(i) + toAssign.getCoeff(i);
+            setCoeff(newCoeff, i);
+        }
     }
 }
 
 // Overload subtraction assignment operator, adds the second polynomial to the first
-// and stores the result to the first
+// and stores the result to the first, identical to "+=" operator
 void Poly::operator-=(const Poly &toAssign)
 {
-    int toAssignExp = toAssign.getMaxCap();
-    if (maxCapacity < toAssignExp) 
+    int toAssignExp = toAssign.getMaxExp();
+    
+    // The following if statement is to see if the current
+    // object has enough space in the array
+    if (getArrSize() < toAssignExp) 
     {
-        maxCapacity = toAssignExp;
-        delete polynomial;
-        polynomial = new int[maxCapacity + 1];
-    }
+        int* newArray;
+        newArray = new int[toAssignExp];
 
-    //something missingz?
+        for (int i = 0; i <= toAssignExp; i++) 
+        {
+            int newCoeff = getCoeff(i) - toAssign.getCoeff(i);
+            newArray[i] = newCoeff;
+        }
 
-    for(int i = 0; i <= toAssignExp; i++) 
+        setArrSize(toAssignExp);
+        delete[] polynomial;
+        polynomial = newArray;
+    } 
+    else 
     {
-        int newCoeff = getCoeff(i) - toAssign.getCoeff(i);
-        setCoeff(newCoeff, i);
+        for (int i = 0; i <= toAssignExp; i++) 
+        {
+            int newCoeff = getCoeff(i) - toAssign.getCoeff(i);
+            setCoeff(newCoeff, i);
+        }
     }
 }
 
@@ -222,20 +246,29 @@ void Poly::operator-=(const Poly &toAssign)
 // }
 
 // Overload equality operator
-const bool Poly::operator==(const Poly &toAssign)
+const bool Poly::operator==(const Poly &toCompare)
 {
     // For example [0, 0, 1] is equal to [1] or vice versa
-    if (maxCapacity != toAssign.getMaxCap())
+    if (getMaxExp() != toCompare.getMaxExp())
     {
-        
+        return false;
     }
+
+    for (int i = 0; i <= getMaxExp(); i++)
+    {
+        if (getCoeff(i) != toCompare.getCoeff(i))
+        {
+            return false;
+        }
+    }
+
     return true;
 }
 
 // Overload inequality operator
-const bool Poly::operator!=(const Poly &toAssign)
+const bool Poly::operator!=(const Poly &toCompare)
 {
-    return !(*this == toAssign);
+    return !(*this == toCompare);
 }
 
 // Get one term's coefficient
@@ -246,12 +279,12 @@ int Poly::getCoeff(int exponent) const
 
 // Get the object's max exponent
 int Poly::getMaxExp() const
-{////////////start with 0 change, make for loop better, make more sense
-    for (int i = getMaxCap(); i >= 0; i--)
+{
+    for (int i = getArrSize(); i >= 0; i--)
     {
         if (getCoeff(i) > 0)
         {
-            return getCoeff(i);
+            return i;
         }
     }
     return 0;
@@ -259,18 +292,13 @@ int Poly::getMaxExp() const
 
 // Get the object's max exponent capacity
 int Poly::getArrSize() const
-{////////////start with 0 change, make for loop better, make more sense
+{
     return arrSize;
 }
 
-void Poly::setCoeff(int coefficient, int exponent) 
+void Poly::setCoeff(int newCoefficient, int newExponent) 
 {
-    polynomial[exponent] = coefficient;
-}
-
-void Poly::setMaxExp(int newMaxExp)
-{
-    maxExponent = newMaxExp;
+    polynomial[newExponent] = newCoefficient;
 }
 
 void Poly::setArrSize(int newArrSize)

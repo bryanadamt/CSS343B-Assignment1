@@ -11,7 +11,6 @@
 class Poly
 {
 private:
-    int maxExponent;
     int* polynomial;
     int arrSize;
 
@@ -45,7 +44,6 @@ public:
     int getArrSize() const;
     
     // Mutators
-    void setCoeff(int coefficient, int exponent);
-    void setMaxExp(int newMaxExp);
+    void setCoeff(int newCoefficient, int newExponent);
     void setArrSize(int newArrSize);
 };
