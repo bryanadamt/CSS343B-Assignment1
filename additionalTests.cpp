@@ -6,7 +6,7 @@ using namespace std;
 int main() 
 {
     //test
-    Poly blank;
+    // Poly blank;
     Poly a(-8,3);
     Poly b(2,1);
     Poly c(-5,1);
@@ -25,23 +25,24 @@ int main()
     Poly hi(w + ha);
     Poly y(hi + g);
 
-    Poly temp(a);
+    Poly temp(x + y);
     
-    for (int i = temp.getMaxCap(); i >= 0; i--) 
+    for (int i = temp.getArrSize() - 1; i > -1; i--) 
     {
         cout << temp.getCoeff(i) << ", ";  
     }
-    cout <<endl;
-    temp -= b;
-    for (int i = temp.getMaxCap(); i >= 0; i--) 
-    {
-        cout << temp.getCoeff(i) << ", ";  
-    }
+    // cout <<endl;
+    // temp -= b;
+    // for (int i = temp.getArrSize(); i >= 0; i--) 
+    // {
+    //     cout << temp.getCoeff(i) << ", ";  
+    // }
     cout << endl;
-    if (temp == a)
-    {
-        cout << "temp == a" << endl;
-    }
-    cout << temp.getMaxCap() << endl;;
+    // if (temp == a)
+    // {
+    //     cout << "temp == a" << endl;
+    // }
+    cout << temp.getArrSize() << endl;
+    cout << temp.getMaxExp() << endl;
     return 0;
 }

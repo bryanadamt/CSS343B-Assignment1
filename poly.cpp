@@ -14,21 +14,21 @@
 using namespace std;
 
 // default constructor
-Poly::Poly() : maxExponent(0), arrSize(1)
+Poly::Poly() : arrSize(1)
 {
     polynomial = new int[1];
     setCoeff(0, 0);
 }
 
 // Create a polynomial with the given coefficient and exponent
-Poly::Poly(int coefficient, int exponent) : maxExponent(exponent), arrSize(exponent + 1)
+Poly::Poly(int coefficient, int exponent) : arrSize(exponent + 1)
 {
     polynomial = new int[arrSize];
     setCoeff(coefficient, exponent);
 }
 
 // Create a polynomial with the given coefficient and an exponent of 0
-Poly::Poly(int coefficient) : maxExponent(0), arrSize(1)
+Poly::Poly(int coefficient) : arrSize(1)
 { 
     polynomial = new int[1];
     setCoeff(coefficient, 0);
@@ -37,11 +37,11 @@ Poly::Poly(int coefficient) : maxExponent(0), arrSize(1)
 // Copy Constructor, Create a deep copy of the polynomial toCopy
 Poly::Poly(const Poly &toCopy) : arrSize(toCopy.getArrSize())
 {
-    maxExponent = toCopy.getMaxExp();
     polynomial = new int[arrSize];
+    cout << arrSize << " arrsize" <<endl;
     // a = [0,1]
     // b should also be [0,1] not just [1]
-    for (int i = 0; i <= maxExponent; i++) 
+    for (int i = 0; i < getArrSize(); i++) 
     {
         setCoeff(toCopy.getCoeff(i), i);
     }
@@ -133,7 +133,6 @@ void Poly::operator=(const Poly &toAssign)
     {
         // If current capacity is not enough, delete the polynomial array
         // and create a new one then point the pointer to a new one
-        maxExponent = toAssignExp;
         delete[] polynomial;
         polynomial = new int[toAssign.getArrSize()];
     } 
@@ -282,7 +281,7 @@ int Poly::getMaxExp() const
 {
     for (int i = getArrSize(); i >= 0; i--)
     {
-        if (getCoeff(i) > 0)
+        if (getCoeff(i) != 0)
         {
             return i;
         }
@@ -290,17 +289,19 @@ int Poly::getMaxExp() const
     return 0;
 }
 
-// Get the object's max exponent capacity
+// Get the object's max capacity
 int Poly::getArrSize() const
 {
     return arrSize;
 }
 
-void Poly::setCoeff(int newCoefficient, int newExponent) 
+// Set one coefficient
+void Poly::setCoeff(int newCoefficient, int Exponent) 
 {
-    polynomial[newExponent] = newCoefficient;
+    polynomial[Exponent] = newCoefficient;
 }
 
+// Set array size
 void Poly::setArrSize(int newArrSize)
 {
     arrSize = newArrSize;
