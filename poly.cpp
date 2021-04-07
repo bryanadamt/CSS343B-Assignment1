@@ -218,7 +218,8 @@ void Poly::operator-=(const Poly &toAssign)
 // Overload equality operator
 bool Poly::operator==(const Poly &toAssign)
 {
-    return false;
+    
+    return true;
 }
 
 // Overload inequality operator
@@ -266,7 +267,7 @@ int main()
     Poly hi(w + ha);
     Poly y(hi + g);
 
-    Poly temp(x * y);
+    Poly temp(a);
     
     for (int i = temp.getMaxCap(); i >= 0; i--) 
     {
@@ -279,6 +280,10 @@ int main()
         cout << temp.getCoeff(i) << ", ";  
     }
     cout << endl;
+    if (temp != a)
+    {
+        cout << "temp == a" << endl;
+    }
     cout << temp.getMaxCap() << endl;;
     return 0;
 }
