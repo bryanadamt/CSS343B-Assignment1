@@ -193,7 +193,7 @@ int Poly::getCoeff(int exponent) const
 
 // Get the object's max exponent capacity
 int Poly::getMaxCap() const
-{
+{////////////start with 0 change, make for loop better, make more sense
     return maxCapacity;
 }
 
@@ -209,7 +209,7 @@ int main()
     Poly a(-8,3);
     Poly b(2,1);
     Poly c(-5,1);
-    Poly d(2); //-8^3 +2^1 -5^1 +2
+    Poly d(2); //-8^3 -3^1 +2
 
     Poly e(-3,2);
     Poly f(7); 
@@ -224,8 +224,14 @@ int main()
     Poly hi(w + ha);
     Poly y(hi + g);
 
-    Poly temp(x * y);
-    temp = x;
+    Poly temp;
+    
+    for (int i = temp.getMaxCap(); i >= 0; i--) 
+    {
+        cout << temp.getCoeff(i) << ", ";  
+    }
+    cout <<endl;
+    temp -= b;
     for (int i = temp.getMaxCap(); i >= 0; i--) 
     {
         cout << temp.getCoeff(i) << ", ";  

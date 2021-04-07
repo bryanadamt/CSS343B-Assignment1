@@ -15,13 +15,17 @@ private:
     int* polynomial;
 
 public:
+    // Constructors
     Poly();
     Poly(int coefficient, int exponent);
     Poly(int coefficient);
+    // Copy Constructor
     Poly(const Poly &toCopy);
 
+    // Destructor
     ~Poly();
 
+    // Common overloaded operators
     Poly operator+(const Poly &toAdd);
     Poly operator-(const Poly &toSubtract);
     Poly operator*(const Poly &toMultiply);
@@ -34,8 +38,10 @@ public:
     bool operator==(const Poly &toCompare);
     bool operator!=(const Poly &toCompare);
 
+    // Accessors
     int getCoeff(int exponent) const;
     int getMaxCap() const;
     
+    // Mutators
     void setCoeff(int coefficient, int exponent);
 };
