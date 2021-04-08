@@ -11,10 +11,10 @@ int main()
     Poly c(-5,1);
     Poly d(2); //-8x^3 + 2x^2 -5x + 2
 
-    Poly e(-1,2);
-    Poly f(1); 
+    Poly e(-3,2);
+    Poly f(7); 
     Poly g(5,1);
-    Poly ha(-1,3);//-x^3 -1x^2 + 5x + 7
+    Poly ha(-9,3);//-9x^3 -3x^2 + 5x + 7
     
     Poly q(a + b);
     Poly o(q + c);
@@ -24,9 +24,9 @@ int main()
     Poly hi(w + ha);
     Poly y(hi + g);
 
-    Poly nu(3,4);
-    Poly r(2,2);
-    Poly def(3,4);
+    // Poly nu(3,4);
+    // Poly r(2,2);
+    // Poly def(3,4);
     // x = nu + r;
     // x = x - def;// [3,0,2,0,0] - [3,0,0,0,0]
 
@@ -40,18 +40,23 @@ int main()
     // Poly truthh(-9,4);
     // truth -= truthh;
 
-    Poly temp(y);
-    
+    Poly temp(x);
+
+    Poly huge(3,10);
+    huge -= huge;
+    huge += y;
+    temp *= huge;
+    // cout << x * y << " x*y";
+    // cout << endl;
+    cout << huge << " temp";
     cout << endl;
-    cout << temp;
-    cout << endl;
-    if (temp == a)
-    {
-        cout << "temp == a" << endl;
-    } else {
-        cout << "nah" << endl;
-    }
-    cout << temp.getArrSize() << endl;
-    cout << temp.getMaxExp() << endl;
+    // if (temp == a)
+    // {
+    //     cout << "temp == a" << endl;
+    // } else {
+    //     cout << "nah" << endl;
+    // }
+    cout << huge.getArrSize() << endl;
+    cout << huge.getMaxExp() << endl;
     return 0;
 }

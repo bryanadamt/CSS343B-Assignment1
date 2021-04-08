@@ -38,7 +38,6 @@ Poly::Poly(int coefficient) : arrSize(1)
 Poly::Poly(const Poly &toCopy) : arrSize(toCopy.getArrSize())
 {
     polynomial = new int[arrSize];
-    cout << arrSize << " arrsize" <<endl;
     // a = [0,1]
     // b should also be [0,1] not just [1]
     for (int i = 0; i < getArrSize(); i++) 
@@ -230,29 +229,40 @@ void Poly::operator-=(const Poly &toAssign)
 
 // Overload multiplication assignment operator, multiply the second polynomial to the first
 // and stores the result to the first
-// void Poly::operator*=(const Poly &toAssign)
-// {
-//     int newMaxCap = getMaxCap() + toAssign.getMaxCap();
-//     //search for largest exponent? as its not guaranteed no more
-//     int* newPolyArray = maxCapacity;
-//     if (newMaxCap > maxCapacity)
-//     {
-//         newPolyArray = new int[newMaxCap + 1];
-//     }
+void Poly::operator*=(const Poly &toAssign)
+{
+    int newMaxExp = getMaxExp() + toAssign.getMaxExp();
+    int* newPolyArray;
+    if (newMaxExp > getArrSize())
+    {
+        newPolyArray = new int[newMaxExp + 1];
 
-//     for (int i = getMaxCap(); i >= 0; i--) 
-//     {
-//         for (int j = toAssign.getMaxCap(); j >= 0; j--) 
-//         {
-//             int newExp = i + j;
-//             int newCoeff = newPolyArray[newExp] + (getCoeff(i) * toAssign.getCoeff(j));
-//             newPolyArray[newExp] = newCoeff;
-//         }
-//     }
-
-//     delete[] polynomial;
-//     polynomial = newPolyArray;
-// }
+        for (int i = getMaxExp(); i >= 0; i--) 
+        {
+            for (int j = toAssign.getMaxExp(); j >= 0; j--) 
+                {
+                int newExp = i + j;
+                int newCoeff = newPolyArray[newExp] + (getCoeff(i) * toAssign.getCoeff(j));
+                newPolyArray[newExp] = newCoeff;
+            }
+        }
+        setArrSize(newMaxExp + 1);
+        delete[] polynomial;
+        polynomial = newPolyArray;
+    }
+    else
+    {
+        for (int i = getMaxExp(); i >= 0; i--) 
+            {
+            for (int j = toAssign.getMaxExp(); j >= 0; j--) 
+                {
+                    int newExp = i + j;
+                    int newCoeff = (getCoeff(i) * toAssign.getCoeff(j));
+                    setCoeff(newCoeff, newExp);
+                }
+            }
+    }
+}
 
 // Overload equality operator
 const bool Poly::operator==(const Poly &toCompare)
@@ -331,6 +341,7 @@ ostream& operator<<(ostream& out, const Poly& toPrint)
 // stream overload, Input Polynomial
 istream& operator>>(istream& in, const Poly& toPrint)
 {
+
     return in;
 }
 
