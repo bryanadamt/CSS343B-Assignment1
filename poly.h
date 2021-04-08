@@ -51,6 +51,6 @@ public:
     int getArrSize() const;
     
     // Mutators
-    void setCoeff(int newCoefficient, int Exponent);
+    void setCoeff(int newCoefficient, int exponent);
     void setArrSize(int newArrSize);
 };

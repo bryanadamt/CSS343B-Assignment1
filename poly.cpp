@@ -361,8 +361,6 @@ istream& operator>>(istream& in, Poly& toPrint)
         // than the capacity of the array
         if (newExp < toPrint.getArrSize() && newExp >= 0)
         {
-            cout << newCoeff << " newC" << endl;
-            cout << newExp << " newExp" << endl;
             toPrint.setCoeff(newCoeff, newExp);   
         }
     }
@@ -399,9 +397,24 @@ int Poly::getArrSize() const
 }
 
 // Set one coefficient
-void Poly::setCoeff(int newCoefficient, int Exponent) 
+void Poly::setCoeff(int newCoefficient, int exponent) 
 {
-    polynomial[Exponent] = newCoefficient;
+    if (exponent > getArrSize())
+    {
+        int* newArray;
+        newArray = new int[exponent + 1];
+        
+        for (int i = getArrSize(); i >= 0; i--)
+        {
+            newArray[i] = getCoeff(i);
+        }
+
+        setArrSize(exponent + 1);
+        delete[] polynomial;
+        polynomial = newArray;
+    }
+
+    polynomial[exponent] = newCoefficient;
 }
 
 // Set array size
