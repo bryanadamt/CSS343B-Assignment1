@@ -46,4 +46,8 @@ public:
     // Mutators
     void setCoeff(int newCoefficient, int Exponent);
     void setArrSize(int newArrSize);
+
+    // Input Output Overloaded Operators
+    friend ostream& operator<<(ostream& out, const Poly& print);
+    friend istream& operator>>(istream& in, Poly& input);
 };

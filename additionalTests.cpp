@@ -30,11 +30,16 @@ int main()
     // x = nu + r;
     // x = x - def;// [3,0,2,0,0] - [3,0,0,0,0]
 
-    Poly temp(y);
-    Poly ya(-9,3);
-    Poly yu(-3,2);
-    ya += yu;
-    temp -= ya;
+    // Poly ya(-9,3);
+    // Poly yu(-3,2);
+    // ya += yu;
+    // temp -= ya;
+
+    Poly truth(-9,4);
+    truth += a;
+    Poly truthh(-9,4);
+    truth -= truthh;
+    Poly temp(truth);
     
     for (int i = temp.getArrSize() - 1; i > -1; i--) 
     {
@@ -47,10 +52,12 @@ int main()
     //     cout << temp.getCoeff(i) << ", ";  
     // }
     cout << endl;
-    // if (temp == a)
-    // {
-    //     cout << "temp == a" << endl;
-    // }
+    if (temp == a)
+    {
+        cout << "temp == a" << endl;
+    } else {
+        cout << "nah" << endl;
+    }
     cout << temp.getArrSize() << endl;
     cout << temp.getMaxExp() << endl;
     return 0;
