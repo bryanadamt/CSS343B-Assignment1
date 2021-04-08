@@ -43,7 +43,7 @@ public:
 
     // Input Output Overloaded Operators
     friend ostream& operator << (ostream& out, const Poly& toPrint);
-    friend istream& operator >> (istream& in, const Poly& toPrint);
+    friend istream& operator >> (istream& in, Poly& toPrint);
 
     // Accessors
     int getCoeff(int exponent) const;

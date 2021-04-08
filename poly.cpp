@@ -339,9 +339,17 @@ ostream& operator<<(ostream& out, const Poly& toPrint)
 }
 
 // stream overload, Input Polynomial
-istream& operator>>(istream& in, const Poly& toPrint)
+istream& operator>>(istream& in, Poly& toPrint)
 {
-
+    int newCoeff, newExp;
+    in >> newCoeff;
+    in >> newExp;
+    while(newCoeff != -1 || newExp != -1)
+    {
+        toPrint.setCoeff(newCoeff, newExp);
+        in >> newCoeff;
+        in >> newExp;
+    }
     return in;
 }
 

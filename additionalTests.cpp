@@ -44,10 +44,12 @@ int main()
 
     Poly huge(3,10);
     huge -= huge;
-    huge += y;
-    temp *= huge;
+    // huge += y;
+    // temp *= huge;
     // cout << x * y << " x*y";
     // cout << endl;
+
+    cin >> huge;
     cout << huge << " temp";
     cout << endl;
     // if (temp == a)
