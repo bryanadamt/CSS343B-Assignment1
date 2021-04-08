@@ -160,20 +160,26 @@ void Poly::operator+=(const Poly &toAssign)
     
     // The following if statement is to see if the current
     // object has enough space in the array
-    if (getArrSize() < toAssignExp) 
+    if (getArrSize() <= toAssignExp) 
     {
         int* newArray;
         newArray = new int[toAssignExp];
 
+        for (int i = 0; i <= getMaxExp(); i++) 
+        {
+            newArray[i] = getCoeff(i);
+        } 
+
         for (int i = 0; i <= toAssignExp; i++) 
         {
-            int newCoeff = getCoeff(i) + toAssign.getCoeff(i);
+            int newCoeff = newArray[i] + toAssign.getCoeff(i);
             newArray[i] = newCoeff;
-        }
+        } 
 
-        setArrSize(toAssignExp);
+        setArrSize(toAssignExp + 1);
         delete[] polynomial;
         polynomial = newArray;
+        cout << "yeet" <<endl;
     } 
     else 
     {
@@ -193,18 +199,23 @@ void Poly::operator-=(const Poly &toAssign)
     
     // The following if statement is to see if the current
     // object has enough space in the array
-    if (getArrSize() < toAssignExp) 
+    if (getArrSize() <= toAssignExp) 
     {
         int* newArray;
         newArray = new int[toAssignExp];
 
+        for (int i = 0; i <= getMaxExp(); i++) 
+        {
+            newArray[i] = getCoeff(i);
+        } 
+
         for (int i = 0; i <= toAssignExp; i++) 
         {
-            int newCoeff = getCoeff(i) - toAssign.getCoeff(i);
+            int newCoeff = newArray[i] - toAssign.getCoeff(i);
             newArray[i] = newCoeff;
-        }
+        } 
 
-        setArrSize(toAssignExp);
+        setArrSize(toAssignExp + 1);
         delete[] polynomial;
         polynomial = newArray;
     } 
@@ -281,8 +292,6 @@ int Poly::getMaxExp() const
 {
     for (int i = getArrSize(); i >= 0; i--)
     {
-        cout << getArrSize() << " arr" <<endl;
-        cout << getCoeff(i) << " coe" <<endl;
         if (getCoeff(i) != 0)
         {
             return i;

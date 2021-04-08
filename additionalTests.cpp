@@ -27,9 +27,14 @@ int main()
     Poly nu(3,4);
     Poly r(2,2);
     Poly def(3,4);
-    x = nu + r - def;// [3,0,2,0,0] - [3,0,0,0,0]
-    //x = a;
-    Poly temp(x);
+    // x = nu + r;
+    // x = x - def;// [3,0,2,0,0] - [3,0,0,0,0]
+
+    Poly temp(y);
+    Poly ya(-9,3);
+    Poly yu(-3,2);
+    ya += yu;
+    temp -= ya;
     
     for (int i = temp.getArrSize() - 1; i > -1; i--) 
     {
