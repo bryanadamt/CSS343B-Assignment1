@@ -125,7 +125,7 @@ Poly Poly::operator*(const Poly &toMultiply)
 }
 
 // Overload assignment operator, assign one polynomial to another
-void Poly::operator=(const Poly &toAssign)
+Poly& Poly::operator=(const Poly &toAssign)
 {
     int toAssignExp = toAssign.getMaxExp();
     if (getArrSize() < toAssignExp) 
@@ -145,15 +145,18 @@ void Poly::operator=(const Poly &toAssign)
         }
     }
 
+    setArrSize(toAssignExp + 1);
     for (int i = 0; i <= toAssignExp; i++) 
     {
         setCoeff(toAssign.getCoeff(i), i);
     }
+
+    return *this;
 }
 
 // Overload addition assignment operator, adds the second polynomial to the first
 // and stores the result to the first
-void Poly::operator+=(const Poly &toAssign)
+Poly& Poly::operator+=(const Poly &toAssign)
 {
     int toAssignExp = toAssign.getMaxExp();
     
@@ -187,11 +190,13 @@ void Poly::operator+=(const Poly &toAssign)
             setCoeff(newCoeff, i);
         }
     }
+
+    return *this;
 }
 
 // Overload subtraction assignment operator, adds the second polynomial to the first
 // and stores the result to the first, identical to "+=" operator
-void Poly::operator-=(const Poly &toAssign)
+Poly& Poly::operator-=(const Poly &toAssign)
 {
     int toAssignExp = toAssign.getMaxExp();
     
@@ -225,11 +230,13 @@ void Poly::operator-=(const Poly &toAssign)
             setCoeff(newCoeff, i);
         }
     }
+
+    return *this;
 }
 
 // Overload multiplication assignment operator, multiply the second polynomial to the first
 // and stores the result to the first
-void Poly::operator*=(const Poly &toAssign)
+Poly& Poly::operator*=(const Poly &toAssign)
 {
     int newMaxExp = getMaxExp() + toAssign.getMaxExp();
     int* newPolyArray;
@@ -262,6 +269,8 @@ void Poly::operator*=(const Poly &toAssign)
                 }
             }
     }
+
+    return *this;
 }
 
 // Overload equality operator
@@ -323,7 +332,7 @@ ostream& operator<<(ostream& out, const Poly& toPrint)
         {
             if (i == 0) 
             { 
-                out<< coeff; 
+                out << " " << coeff; 
             } 
             else if (i == 1) 
             { 
@@ -346,9 +355,16 @@ istream& operator>>(istream& in, Poly& toPrint)
     in >> newExp;
     while(newCoeff != -1 || newExp != -1)
     {
-        toPrint.setCoeff(newCoeff, newExp);
         in >> newCoeff;
         in >> newExp;
+        // Ignore if user inputs a coeff thats bigger
+        // than the capacity of the array
+        if (newExp < toPrint.getArrSize() && newExp >= 0)
+        {
+            cout << newCoeff << " newC" << endl;
+            cout << newExp << " newExp" << endl;
+            toPrint.setCoeff(newCoeff, newExp);   
+        }
     }
     return in;
 }
@@ -356,7 +372,11 @@ istream& operator>>(istream& in, Poly& toPrint)
 // Get one term's coefficient
 int Poly::getCoeff(int exponent) const 
 {
-    return polynomial[exponent];
+    if (exponent < getArrSize() && exponent >= 0)
+    {
+        return polynomial[exponent];
+    }
+    return 0;
 }
 
 // Get the object's max exponent

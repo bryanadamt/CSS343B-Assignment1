@@ -33,10 +33,10 @@ public:
     Poly operator-(const Poly &toSubtract);
     Poly operator*(const Poly &toMultiply);
 
-    void operator=(const Poly &toAssign);
-    void operator+=(const Poly &toAssign);
-    void operator-=(const Poly &toAssign);
-    void operator*=(const Poly &toAssign);
+    Poly& operator=(const Poly &toAssign);
+    Poly& operator+=(const Poly &toAssign);
+    Poly& operator-=(const Poly &toAssign);
+    Poly& operator*=(const Poly &toAssign);
 
     const bool operator==(const Poly &toCompare);
     const bool operator!=(const Poly &toCompare);
