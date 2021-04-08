@@ -1,12 +1,15 @@
 // ------------------------------------------------ Poly.h --------------------------------------------------------
 // Bryan Adam Tjendra, CSS 343B
 // Created: 2/4/2021
-// Date of Last Modification:
+// Date of Last Modification: 7/4/2021
 // --------------------------------------------------------------------------------------------------------------------
 // Purpose - This project is to create the abstract data type (ADT) for a polynomial called Poly.
 // --------------------------------------------------------------------------------------------------------------------
 // Notes on specifications, special algorithms, and assumptions.
 // --------------------------------------------------------------------------------------------------------------------
+#include <iostream>
+
+using namespace std;
 
 class Poly
 {
@@ -38,6 +41,10 @@ public:
     const bool operator==(const Poly &toCompare);
     const bool operator!=(const Poly &toCompare);
 
+    // Input Output Overloaded Operators
+    friend ostream& operator << (ostream& out, const Poly& toPrint);
+    friend istream& operator >> (istream& in, const Poly& toPrint);
+
     // Accessors
     int getCoeff(int exponent) const;
     int getMaxExp() const;
@@ -46,8 +53,4 @@ public:
     // Mutators
     void setCoeff(int newCoefficient, int Exponent);
     void setArrSize(int newArrSize);
-
-    // Input Output Overloaded Operators
-    friend ostream& operator<<(ostream& out, const Poly& print);
-    friend istream& operator>>(istream& in, Poly& input);
 };

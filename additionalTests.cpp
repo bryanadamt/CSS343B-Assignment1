@@ -11,10 +11,10 @@ int main()
     Poly c(-5,1);
     Poly d(2); //-8x^3 + 2x^2 -5x + 2
 
-    Poly e(-3,2);
-    Poly f(7); 
+    Poly e(-1,2);
+    Poly f(1); 
     Poly g(5,1);
-    Poly ha(-9,3);//-9x^3 -3x^2 + 5x + 7
+    Poly ha(-1,3);//-x^3 -1x^2 + 5x + 7
     
     Poly q(a + b);
     Poly o(q + c);
@@ -35,22 +35,15 @@ int main()
     // ya += yu;
     // temp -= ya;
 
-    Poly truth(-9,4);
-    truth += a;
-    Poly truthh(-9,4);
-    truth -= truthh;
-    Poly temp(truth);
+    // Poly truth(-9,4);
+    // truth += a;
+    // Poly truthh(-9,4);
+    // truth -= truthh;
+
+    Poly temp(y);
     
-    for (int i = temp.getArrSize() - 1; i > -1; i--) 
-    {
-        cout << temp.getCoeff(i) << " (" << i << ") ,";  
-    }
-    // cout <<endl;
-    // temp -= b;
-    // for (int i = temp.getArrSize(); i >= 0; i--) 
-    // {
-    //     cout << temp.getCoeff(i) << ", ";  
-    // }
+    cout << endl;
+    cout << temp;
     cout << endl;
     if (temp == a)
     {

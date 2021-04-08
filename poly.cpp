@@ -1,7 +1,7 @@
-// ------------------------------------------------ poly.cpp --------------------------------------------------------
+// ------------------------------------------------ Poly.cpp --------------------------------------------------------
 // Bryan Adam Tjendra, CSS 343B
 // Created: 2/4/2021
-// Date of Last Modification: 
+// Date of Last Modification: 7/4/2021
 // -------------------------------------------------------------------------------------------------------------------- 
 // Purpose - This project is to create the abstract data type (ADT) for a polynomial called Poly.
 // -------------------------------------------------------------------------------------------------------------------- 
@@ -179,7 +179,6 @@ void Poly::operator+=(const Poly &toAssign)
         setArrSize(toAssignExp + 1);
         delete[] polynomial;
         polynomial = newArray;
-        cout << "yeet" <<endl;
     } 
     else 
     {
@@ -279,6 +278,60 @@ const bool Poly::operator==(const Poly &toCompare)
 const bool Poly::operator!=(const Poly &toCompare)
 {
     return !(*this == toCompare);
+}
+
+// Ostream overload, Output Polynomial
+ostream& operator<<(ostream& out, const Poly& toPrint)
+{
+    if (toPrint.getMaxExp() == 0)
+    {
+        if (toPrint.getCoeff(0) == 0)
+        {
+            out << "0";
+        }
+        return out;
+    } 
+    for (int i = toPrint.getMaxExp(); i >= 0; i--)
+    {
+        int coeff = toPrint.getCoeff(i);
+        if (coeff > 0)
+        {
+            if (i == 0) 
+            { 
+                out << " +" << coeff; 
+            } 
+            else if (i == 1) 
+            { 
+                out << " +" << coeff << "x"; 
+            }
+            else 
+            { 
+                out << " +" << coeff << "x^" << i; 
+            }
+        }
+        else if (coeff < 0)
+        {
+            if (i == 0) 
+            { 
+                out<< coeff; 
+            } 
+            else if (i == 1) 
+            { 
+                out << " " << coeff << "x"; 
+            }
+            else 
+            { 
+                out << " " << coeff << "x^" << i; 
+            }
+        }
+    }
+    return out;
+}
+
+// stream overload, Input Polynomial
+istream& operator>>(istream& in, const Poly& toPrint)
+{
+    return in;
 }
 
 // Get one term's coefficient
