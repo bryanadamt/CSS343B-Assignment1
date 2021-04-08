@@ -19,6 +19,8 @@ int main()
     Poly q(a + b);
     Poly o(q + c);
     Poly x(o + d);
+    
+    cout << q << " yay" << endl;
 
     Poly w(e + f);
     Poly hi(w + ha);
@@ -48,10 +50,10 @@ int main()
     // temp *= huge;
     // cout << x * y << " x*y";
     // cout << endl;
-
-    cin >> huge;
-    cout << huge << " temp";
-    cout << endl;
+    // cout << "input: ";
+    // cin >> huge;
+    // cout << huge << " temp";
+    // cout << endl;
     // if (temp == a)
     // {
     //     cout << "temp == a" << endl;
