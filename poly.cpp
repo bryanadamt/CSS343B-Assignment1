@@ -50,6 +50,7 @@ Poly::Poly(const Poly &toCopy) : arrSize(toCopy.getArrSize())
 Poly::~Poly() 
 {
     delete[] polynomial;
+    polynomial = NULL;
 }
 
 // Overload addition operator, create a new Poly object
@@ -127,28 +128,31 @@ Poly Poly::operator*(const Poly &toMultiply)
 // Overload assignment operator, assign one polynomial to another
 Poly& Poly::operator=(const Poly &toAssign)
 {
-    int toAssignExp = toAssign.getMaxExp();
-    if (getArrSize() < toAssignExp) 
+    if (&toAssign != this)
     {
-        // If current capacity is not enough, delete the polynomial array
-        // and create a new one then point the pointer to a new one
-        delete[] polynomial;
-        polynomial = new int[toAssign.getArrSize()];
-    } 
-    else if (getMaxExp() > toAssignExp)
-    {
-        // If the original polynomial has more exponent,
-        // turn them all to 0
-        for (int i = toAssignExp + 1; i <= getArrSize(); i++)
+        int toAssignExp = toAssign.getMaxExp();
+        if (getArrSize() < toAssignExp) 
         {
-            setCoeff(0, i);
+            // If current capacity is not enough, delete the polynomial array
+            // and create a new one then point the pointer to a new one
+            delete[] polynomial;
+            polynomial = new int[toAssign.getArrSize()];
+        } 
+        else if (getMaxExp() > toAssignExp)
+        {
+            // If the original polynomial has more exponent,
+            // turn them all to 0
+            for (int i = toAssignExp + 1; i <= getArrSize(); i++)
+            {
+                setCoeff(0, i);
+            }
         }
-    }
 
-    setArrSize(toAssignExp + 1);
-    for (int i = 0; i <= toAssignExp; i++) 
-    {
-        setCoeff(toAssign.getCoeff(i), i);
+        setArrSize(toAssignExp + 1);
+        for (int i = 0; i <= toAssignExp; i++) 
+        {
+            setCoeff(toAssign.getCoeff(i), i);
+        }
     }
 
     return *this;
