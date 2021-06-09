@@ -311,8 +311,8 @@ ostream& operator<<(ostream& out, const Poly& toPrint)
         if (toPrint.getCoeff(0) == 0)
         {
             out << "0";
+            return out;
         }
-        return out;
     } 
     for (int i = toPrint.getMaxExp(); i >= 0; i--)
     {
@@ -425,4 +425,11 @@ void Poly::setCoeff(int newCoefficient, int exponent)
 void Poly::setArrSize(int newArrSize)
 {
     arrSize = newArrSize;
+}
+
+int main() {
+    Poly K(5, 3);
+    Poly KB(1, 0);
+    KB += K;
+    cout << "kb = " << KB << endl;
 }
